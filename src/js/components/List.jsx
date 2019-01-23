@@ -4,18 +4,19 @@ import { selectItem } from "../actions/index";
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectItem: itemKey => dispatch(selectItem(itemKey))
+    selectItem: itemKey => dispatch(selectItem(itemKey)),
   };
 }
 
 const mapStateToProps = state => {
   return { items: state.items };
 };
+
 const ConnectedList = ({ items, selectItem }) => (
   <ul className="theList">
     {items.map(item => (
       <li onClick={() => selectItem(item.key)} className={item.className} key={item.key}>
-        {item.name}
+        {item.taskName}
       </li>
     ))}
   </ul>

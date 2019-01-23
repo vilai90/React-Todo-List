@@ -4,33 +4,39 @@ import { DELETE_ITEM } from "../constants/action-types";
 import { SELECT_ITEM } from "../constants/action-types";
 import { DELETE_ALL } from "../constants/action-types";
 import { EXPORT_ALL } from "../constants/action-types";
+import { SHOW_MODAL } from "../constants/action-types";
+import { HIDE_MODAL } from "../constants/action-types";
 
 const initialState = {
   items: [],
-  editItem: '',
+  editedItem: '',
+  modalType: '',
+  showModal: false,
 };
 function rootReducer(state = initialState, action) {
-
-	
-	
-	switch(action.type) {
-		case ADD_ITEM:
+  switch(action.type) {
+	case ADD_ITEM:
     return Object.assign({}, state, {
       items: state.items.concat(action.payload)
     });
 	
 	case EDIT_ITEM:
-		return Object.assign({}, state, {
-		  editItem: action.payload
-		});
-		
-		case DELETE_ITEM:
-		const selectedDeleteItems = state.items.filter(function (item) {
-			return (!item.selected);
-		});
-		return Object.assign({}, state, {
-		  items: selectedDeleteItems
-		});
+	const editedItems = state.items.map(function (item) {
+			if (item.key === action.payload.key) {
+					item = action.payload;
+			}
+	});
+    return Object.assign({}, state, {
+      items: editedItems
+    });
+	
+	case DELETE_ITEM:
+	const selectedDeleteItems = state.items.filter(function (item) {
+		return (!item.selected);
+	});
+	return Object.assign({}, state, {
+	  items: selectedDeleteItems
+	});
 	
 	case SELECT_ITEM:
 	let selectedItems = state.items.map(function (item) {
@@ -48,6 +54,42 @@ function rootReducer(state = initialState, action) {
     return Object.assign({}, state, {
 		items: selectedItems,
 	  });
+	
+	case SHOW_MODAL:
+		const buttonValue = action.payload;
+		if (buttonValue === 'edit') {
+			let selectedEditItems = state.items.filter(function (item) {
+				return item.selected;
+			});
+			if (selectedEditItems.length > 1) { 
+				alert("More than one task selected. Please only select one for editing."); 
+				 return Object.assign({}, state, {
+				  showModal: false
+				 });
+			} else if( selectedEditItems.length === 0) {
+				alert("No task selected. Please selecte one for editing.");
+				return Object.assign({}, state, {
+				  showModal: false
+				 });
+			} else {
+				return Object.assign({}, state, {
+				  showModal: true,
+				  modalType: buttonValue,
+				  editedItem: selectedEditItems[0],
+				 });
+			}
+		}
+		
+		return Object.assign({}, state, {
+		  showModal: true,
+		  modalType: buttonValue,
+		 });
+	
+	case HIDE_MODAL:
+		return Object.assign({}, state, {
+		  showModal: false,
+		  modalType: '',
+		 });
   
     case DELETE_ALL:
 	return Object.assign({}, state, {
