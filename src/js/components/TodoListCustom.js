@@ -5,7 +5,6 @@ import "./TodoList.css";
 import Modal from "react-modal";
 import 'react-datepicker/dist/react-datepicker.css';
 
- 
 class TodoListCustom extends Component {
 	constructor(props) {
 		super(props);
@@ -32,74 +31,70 @@ class TodoListCustom extends Component {
     }
 	
 	addItem(e) {
-			if (this.state.taskName !== '' || this.state.dueDate !== "" || this.state.description !== "") {
-		let newItem = {
-		  name: this.state.taskName,
-		  dueDate: this.state.dueDate,
-		  description: this.state.description,
-		  key: Date.now(),
-		};
-	 
-		this.setState((prevState) => {
-		  return { 
-			items: prevState.items.concat(newItem),
-			showModal: false,
-			name: '',
-			dueDate: '',
-			description: '',
-		  };
-		});
-	  }
-	   
-	  console.log(this.state.items);
-		 
+		if (this.state.taskName !== '' || this.state.dueDate !== "" || this.state.description !== "") {
+			let newItem = {
+				name: this.state.taskName,
+				dueDate: this.state.dueDate,
+				description: this.state.description,
+				key: Date.now(),
+			};
 
+			this.setState((prevState) => {
+				return { 
+					items: prevState.items.concat(newItem),
+					showModal: false,
+					name: '',
+					dueDate: '',
+					description: '',
+				};
+			});
+		}
 	}
 	
 	editItem(e) {
 		let selectedItems = this.state.items.filter(function (item) { return item.selected; });
 		let selectedItem = selectedItems[0];
-	
-	  selectedItem.name = this.state.taskName;
-	  selectedItem.dueDate = this.state.dueDate;
-	  selectedItem.description = this.state.description;
-	
+
+		selectedItem.name = this.state.taskName;
+		selectedItem.dueDate = this.state.dueDate;
+		selectedItem.description = this.state.description;
+
 		this.setState({showModal: false});
 	}
 	
 	selectItem(key) {
-	  let selectedItems = this.state.items.map(function (item) {
+		let selectedItems = this.state.items.map(function (item) {
 		if (item.key === key) {
 			if (!item.selected) { 
-			  item.className = "listItemSelected";
-			  item.selected = true;
+				item.className = "listItemSelected";
+				item.selected = true;
 			} else {
-			  item.className = "";
-			  item.selected = false;
+				item.className = "";
+				item.selected = false;
 			}
 		} 
 		return item;
-	  });
-	 
-	  this.setState({
-		items: selectedItems,
-	  });
+		});
+
+		this.setState({
+			items: selectedItems,
+		});
 	}
 	
 	deleteItems() {
 		let filteredItems = this.state.items.filter(function (item) {
-		return (!item.selected);
-	  });
+			return (!item.selected);
+		});
 	 
-	  this.setState({
-		items: filteredItems
-	  });
+		this.setState({
+			items: filteredItems
+		});
 	}
 	
 	deleteAll() {
-	  this.setState({
-		items: []
-	  });
+		this.setState({
+			items: []
+		});
 	}
 	
 	exportList() {
@@ -119,7 +114,6 @@ class TodoListCustom extends Component {
 		let isOpen = true;
 		if (buttonValue === 'edit') {
 			let selectedItems = this.state.items.filter(function (item) { return item.selected; });
-
 			if (selectedItems.length > 1) { 
 				alert("More than one task selected. Please only select one for editing."); 
 				isOpen = false;
@@ -135,70 +129,68 @@ class TodoListCustom extends Component {
 				});
 			}
 		} else {
-				this.setState({
-					taskName: '',
-					dueDate: '',
-					description: '',
-				});
+			this.setState({
+				taskName: '',
+				dueDate: '',
+				description: '',
+			});
 		}
-		
-		
-	  this.setState({
-		showModal: isOpen,
-		modalType: e.target.value,
-	  });
+
+		this.setState({
+			showModal: isOpen,
+			modalType: e.target.value,
+		});
 	}
 
-  hideModal = () => {
-    this.setState({ showModal: false });
-  };
-  
-  taskNameHandler(e) {
-	  this.setState({taskName: e.target.value});
-  }
-  
-  dueDateHandler(date) {
-	  this.setState({dueDate: date});
-  }
-  
-  descriptionHandler(e) {
-	  this.setState({description: e.target.value});
-  }
+	hideModal = () => {
+		this.setState({ showModal: false });
+	};
+
+	taskNameHandler(e) {
+		this.setState({taskName: e.target.value});
+	}
+
+	dueDateHandler(date) {
+		this.setState({dueDate: date});
+	}
+
+	descriptionHandler(e) {
+		this.setState({description: e.target.value});
+	}
   
 	render() {
 		return (
-		  <div className="todoListMain">
-			<div className="header">
-			  <form>
-				<button type="button" onClick={this.showUpdateModal} value='add'>add</button>
-				<button type="button" onClick={this.showUpdateModal} value='edit'>edit</button>
-				<button type="button" onClick={this.exportList}>export</button>
-				<button type="button" onClick={this.deleteItems}>delete</button>
-				<button type="button" onClick={this.deleteAll}>delete all</button>
-			  </form>
-			  
+			<div className="todoListMain">
+				<div className="header">
+					<form>
+						<button type="button" onClick={this.showUpdateModal} value='add'>add</button>
+						<button type="button" onClick={this.showUpdateModal} value='edit'>edit</button>
+						<button type="button" onClick={this.exportList}>export</button>
+						<button type="button" onClick={this.deleteItems}>delete</button>
+						<button type="button" onClick={this.deleteAll}>delete all</button>
+					</form>
+				</div>
+				<TodoCustomItems entries={this.state.items} select={this.selectItem}/>
+				<Modal isOpen={this.state.showModal}>
+					<h1>{this.state.modalType} a Task</h1>
+					<form>
+						<p>Name:</p>
+						<input value={this.state.taskName} onChange={this.taskNameHandler}>
+						</input>
+						<p>Due Date:</p>
+						<DatePicker selected={this.state.dueDate} onChange={this.dueDateHandler} />
+						<p>Description:</p>
+						<input value={this.state.description} onChange={this.descriptionHandler}>
+						</input>
+					</form>
+					<button type="button" onClick={() => {this.state.modalType === 'add' ? this.addItem() : this.editItem()}}>
+						{this.state.modalType}
+					</button>
+					<button type="button" onClick={this.hideModal}>
+						cancel
+					</button>
+				</Modal>
 			</div>
-			<TodoCustomItems entries={this.state.items} select={this.selectItem}/>
-			<Modal isOpen={this.state.showModal}>
-				<h1>{this.state.modalType} a Task</h1>
-				<form>
-				<p>Name:</p>
-				<input value={this.state.taskName} onChange={this.taskNameHandler}>
-				</input>
-				<p>Due Date:</p>
-				<DatePicker selected={this.state.dueDate} onChange={this.dueDateHandler} />
-				<p>Description:</p>
-				<input value={this.state.description} onChange={this.descriptionHandler}>
-				</input>
-				</form>
-				<button type="button" onClick={() => {this.state.modalType === 'add' ? this.addItem() : this.editItem()}}>
-					{this.state.modalType}
-				</button>
-				<button type="button" onClick={this.hideModal}>
-				  cancel
-				 </button>
-			</Modal>
-		  </div>
 		);
 	}
 }

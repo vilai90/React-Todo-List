@@ -7,24 +7,24 @@ import { exportAll } from "../actions/index";
 import { showModal } from "../actions/index";
 
 function mapDispatchToProps(dispatch) {
-  return {
-	showModal: modalType => dispatch(showModal(modalType)),
-	deleteAll: () => dispatch(deleteAll()),
-	deleteItems: () => dispatch(deleteItems()),
-	exportAll: () => dispatch(exportAll()),
-  };
+	return {
+		showModal: modalType => dispatch(showModal(modalType)),
+		deleteAll: () => dispatch(deleteAll()),
+		deleteItems: () => dispatch(deleteItems()),
+		exportAll: () => dispatch(exportAll()),
+	};
 }
 class ConnectedForm extends Component {
-  constructor() {
-    super();
-	
-	this.showUpdateModal = this.showUpdateModal.bind(this);
-	this.deleteItems = this.deleteItems.bind(this);
-	this.deleteAll = this.deleteAll.bind(this);
-	this.exportList = this.exportList.bind(this);
-  }
+	constructor() {
+		super();
+
+		this.showUpdateModal = this.showUpdateModal.bind(this);
+		this.deleteItems = this.deleteItems.bind(this);
+		this.deleteAll = this.deleteAll.bind(this);
+		this.exportList = this.exportList.bind(this);
+	}
   
-    showUpdateModal(e) {
+	showUpdateModal(e) {
 		e.preventDefault();
 		this.props.showModal(e.target.value);
 	}
@@ -44,19 +44,19 @@ class ConnectedForm extends Component {
 		this.props.deleteAll();
 	}
 	
-  render() {
-    return (
+	render() {
+		return (
 			<div className="header">
-			  <form>
-				<button type="button" onClick={this.showUpdateModal} value='add'>add</button>
-				<button type="button" onClick={this.showUpdateModal} value='edit'>edit</button>
-				<button type="button" onClick={this.exportList}>export</button>
-				<button type="button" onClick={this.deleteItems}>delete</button>
-				<button type="button" onClick={this.deleteAll}>delete all</button>
-			  </form>
+				<form>
+					<button type="button" onClick={this.showUpdateModal} value='add'>add</button>
+					<button type="button" onClick={this.showUpdateModal} value='edit'>edit</button>
+					<button type="button" onClick={this.exportList}>export</button>
+					<button type="button" onClick={this.deleteItems}>delete</button>
+					<button type="button" onClick={this.deleteAll}>delete all</button>
+				</form>
 			</div>
-    );
-  }
+		);
+	}
 }
 const Form = connect(null, mapDispatchToProps)(ConnectedForm);
 export default Form;
