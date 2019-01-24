@@ -8,10 +8,10 @@ import { SHOW_MODAL } from "../constants/action-types";
 import { HIDE_MODAL } from "../constants/action-types";
 
 const initialState = {
-  items: [],
-  editedItem: '',
-  modalType: '',
-  showModal: false,
+	items: [],
+	editedItem: '',
+	modalType: '',
+	showModal: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -108,14 +108,16 @@ function rootReducer(state = initialState, action) {
 			if (state.items.length === 0) {
 				return null;
 			}
-			let tasks = state.items.map(item => item.name + " " + item.dueDate + " " + item.description + "\r\n");
+			let tasks = state.items.map(item => item.taskName + " " + item.dueDate + " " + item.description + "\r\n");
 			let exportLink = document.createElement("a");
 			let file = new Blob(tasks, {type: 'text/plain'});
 			exportLink.href = URL.createObjectURL(file);
 			exportLink.download = "TodoList.txt";
 			exportLink.click();
+			return state;
+			
+		default:
+			return state;
 	}
-	
-	return state;
 }
 export default rootReducer;

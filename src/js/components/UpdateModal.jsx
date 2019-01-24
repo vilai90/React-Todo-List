@@ -30,7 +30,7 @@ class ConnectedModal extends Component {
 
 		this.state = {
 			taskName: '',
-			dueDate: '',
+			dueDate: null,
 			description: '',
 		};
 
@@ -81,7 +81,6 @@ class ConnectedModal extends Component {
 	}
   
 	fillForm(e) {
-		console.log(this.props.editedItem);
 		if (this.props.modalType === 'edit') {
 			const editItem = this.props.editedItem;
 			this.setState({
@@ -101,7 +100,7 @@ class ConnectedModal extends Component {
 		this.props.hideModal();
 		this.setState({
 			taskName: '',
-			dueDate: '',
+			dueDate: null,
 			description: '',
 		});
 	}

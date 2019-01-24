@@ -14,7 +14,7 @@ class TodoListCustom extends Component {
 			showModal: false,
 			modalType: '',
 			taskName: '',
-			dueDate: '',
+			dueDate: null,
 			description: '',
 		};
 
@@ -43,8 +43,8 @@ class TodoListCustom extends Component {
 				return { 
 					items: prevState.items.concat(newItem),
 					showModal: false,
+					dueDate: null,
 					name: '',
-					dueDate: '',
 					description: '',
 				};
 			});
