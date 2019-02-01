@@ -9,19 +9,19 @@ import { SHOW_MODAL } from "../constants/action-types";
 import { HIDE_MODAL } from "../constants/action-types";
 
 export function addItem(payload) {
-  return { type: ADD_ITEM, payload };
+	return { type: ADD_ITEM, payload };
 }
 
 export function editItem(payload) {
-  return { type: EDIT_ITEM, payload };
+	return { type: EDIT_ITEM, payload };
 }
 
 export function deleteItems() {
-  return { type: DELETE_ITEM };
+	return { type: DELETE_ITEM };
 }
 
 export function selectItem(payload) {
-  return { type: SELECT_ITEM, payload };
+	return { type: SELECT_ITEM, payload };
 }
 
 export function deleteAll() {
