@@ -26,6 +26,7 @@ class ConnectedForm extends Component {
 		this.deleteItems = this.deleteItems.bind(this);
 		this.deleteAll = this.deleteAll.bind(this);
 		this.exportList = this.exportList.bind(this);
+		this.addRandomItem = this.addRandomItem.bind(this);
 	}
   
 	showUpdateModal(e) {
@@ -48,12 +49,13 @@ class ConnectedForm extends Component {
 		this.props.deleteAll();
 	}
 	
-	fetchTask(e) {
+	addRandomItem(e) {
 		e.preventDefault();
 		axios.get(
 			"https://www.eventbriteapi.com/v3/events/search/?location.address=Seattle&token=66X7H5VWDRYYD6VLQFFX"
 		).then(
 			(response) => {
+				console.log(response);
 				const uid = uuidv1();
 				const event = response.data.events[Math.floor(Math.random() * 11)];
 				let newItem = {
