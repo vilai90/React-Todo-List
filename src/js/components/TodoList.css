@@ -1,35 +1,46 @@
-.todoListMain .header input {
+.todoListMain h3 {
+	margin-left: 10px;
+}
+.todoListMain .buttonLayer input {
   padding: 10px;
   font-size: 16px;
   border: 2px solid #FFF;
   width: 165px;
 }
-.todoListMain .header button {
+.todoListMain .buttonLayer button,
+.ReactModalPortal .buttonLayer button {
   padding: 10px;
   font-size: 16px;
-  margin: 10px;
-  margin-right: 0px;
+  margin: 20px;
   background-color: #0066FF;
   color: #FFF;
   border: 2px solid #0066FF;
+  border-radius: 5px;
 }
-.todoListMain .header button:hover {
+.todoListMain .buttonLayer button:hover {
   background-color: #003399;
   border: 2px solid #003399;
   cursor: pointer;
 }
+
+.ReactModalPortal .buttonLayer button {
+  margin-left: 0;
+}
+
 .todoListMain .theList {
   list-style: none;
   padding-left: 0;
-  width: 250px;
+  width: 500px;
 } 
 .todoListMain .theList li {
   color: #333;
   background-color: rgba(255,255,255,.5);
   padding: 15px;
   margin-bottom: 15px;
+   border: 2px solid #000;
   border-radius: 5px;
   list-style: none;
+  text-align: center;
 }
 ul.theList {
   padding: 0;
@@ -41,8 +52,9 @@ ul.theList {
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 5px;
- 
+  margin-left: 20px;
   transition: background-color .2s ease-out;
+  width: 100#;
 }
  
 .todoListMain .theList li:hover {
@@ -51,5 +63,23 @@ ul.theList {
 }
 
 .todoListMain .theList .listItemSelected {
-	background-color: rgba(120,120,120,1);
+	background-color: rgba(255,255,0,1);
+}
+
+@media (max-width: 600px) {
+	.todoListMain .theList {
+		margin-right: 15px;
+	}
+	
+	.todoListMain .theList,
+	.todoListMain .buttonLayer button {
+		margin: 10px;
+		margin-left: 0;
+		margin-right: 0;
+		width: 100%;
+	}
+	
+	.todoListMain .theList li {
+			margin-left: 0;
+	}
 }

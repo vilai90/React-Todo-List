@@ -12,6 +12,7 @@ const initialState = {
 	editedItem: '',
 	modalType: '',
 	showModal: false,
+	errorMessage: '',
 };
 
 function rootReducer(state = initialState, action) {
@@ -65,19 +66,21 @@ function rootReducer(state = initialState, action) {
 
 		case SHOW_MODAL:
 			const buttonValue = action.payload;
-			if (buttonValue === 'edit') {
+			if (buttonValue === 'Edit') {
 				let selectedEditItems = state.items.filter(function (item) {
 					return item.selected;
 				});
 				if (selectedEditItems.length > 1) { 
-					alert("More than one task selected. Please only select one for editing."); 
 					return Object.assign({}, state, {
-						showModal: false
+						showModal: true,
+						modalType: 'Error',
+						errorMessage: 'More than one task selected. Please only select one for editing.',
 					});
 				} else if( selectedEditItems.length === 0) {
-					alert("No task selected. Please selecte one for editing.");
 					return Object.assign({}, state, {
-						showModal: false
+						showModal: true,
+						modalType: 'Error',
+						errorMessage: 'No task selected. Please select one for editing.',
 					});
 				} else {
 					return Object.assign({}, state, {
@@ -106,7 +109,11 @@ function rootReducer(state = initialState, action) {
 
 		case EXPORT_ALL:
 			if (state.items.length === 0) {
-				return null;
+				return Object.assign({}, state, {
+					showModal: true,
+					modalType: 'Error',
+					errorMessage: 'No tasks to export. Please add at least one task.',
+				});
 			}
 			let tasks = state.items.map(item => item.taskName + " " + item.dueDate + " " + item.description + "\r\n");
 			let exportLink = document.createElement("a");

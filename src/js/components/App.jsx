@@ -1,15 +1,14 @@
 import React from "react";
-import TodoListCustom from "./TodoListCustom.js";
+import "./TodoList.css";
 import Form from "./Form.jsx";
 import List from "./List.jsx";
 import UpdateModal from "./UpdateModal.jsx";
 
 const App = () => (
-  <div>
-		<h3>This is a standard React TodoList</h3>
-		<TodoListCustom/>
-		<h3>This is a React TodoList utilizing Redux</h3>
+  <div>		
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 		<div className="todoListMain">
+		<h3>This is a React TodoList utilizing Redux</h3>
 		<Form/>
 		<List/>
 		<UpdateModal /> 

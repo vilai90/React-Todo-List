@@ -21,6 +21,7 @@ function mapStateToProps(state){
 		isOpen: state.showModal,
 		modalType: state.modalType,
 		editedItem: state.editedItem,
+		errorMessage: state.errorMessage,
 	};
 }
 
@@ -81,7 +82,7 @@ class ConnectedModal extends Component {
 	}
   
 	fillForm(e) {
-		if (this.props.modalType === 'edit') {
+		if (this.props.modalType === 'Edit') {
 			const editItem = this.props.editedItem;
 			this.setState({
 				taskName: editItem.taskName,
@@ -106,27 +107,39 @@ class ConnectedModal extends Component {
 	}
   
 	render() {
-		return (
-			<Modal isOpen={this.props.isOpen} onAfterOpen={this.fillForm}>
-				<h1>{this.props.modalType} a Task</h1>
-				<form>
-					<p>Name:</p>
-					<input value={this.state.taskName} onChange={this.taskNameHandler}>
-					</input>
-					<p>Due Date:</p>
-					<DatePicker selected={this.state.dueDate} onChange={this.dueDateHandler} />
-					<p>Description:</p>
-					<input value={this.state.description} onChange={this.descriptionHandler}>
-					</input>
-				</form>
-				<button type="button" onClick={() => {this.props.modalType === 'add' ? this.add() : this.edit()}}>
-					{this.props.modalType}
-				</button>
-				<button type="button" onClick={this.cancelClick}>
-					cancel
-				</button>
-			</Modal>
-		);
+		if (this.props.modalType === "Error") {
+			return (
+				<Modal isOpen={this.props.isOpen} onAfterOpen={this.fillForm}>
+					<h1>{this.props.modalType}</h1>
+					<p>{this.props.errorMessage}</p>
+					<div className="buttonLayer">
+						<button type="button" onClick={this.cancelClick}>
+							Ok
+						</button>
+					</div>
+				</Modal>
+			);		
+		} else {
+			return (
+				<Modal isOpen={this.props.isOpen} onAfterOpen={this.fillForm}>
+					<h1>{this.props.modalType} a Task</h1>
+						<p>Name:</p>
+						<input value={this.state.taskName} placeholder="Enter Task Name" onChange={this.taskNameHandler} />
+						<p>Due Date:</p>
+						<DatePicker selected={this.state.dueDate} placeholderText="Enter or Select Due Date" onChange={this.dueDateHandler} />
+						<p>Description:</p>
+						<input value={this.state.description} placeholder="Enter Task Description" onChange={this.descriptionHandler} />
+					<div className="buttonLayer">
+						<button onClick={() => {this.props.modalType === 'Add' ? this.add() : this.edit()}}>
+							{this.props.modalType}
+						</button>
+						<button onClick={this.cancelClick}>
+							Cancel
+						</button>
+					</div>
+				</Modal>
+			);
+		}
 	}
 }
 

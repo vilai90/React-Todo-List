@@ -46,14 +46,12 @@ class ConnectedForm extends Component {
 	
 	render() {
 		return (
-			<div className="header">
-				<form>
-					<button type="button" onClick={this.showUpdateModal} value='add'>add</button>
-					<button type="button" onClick={this.showUpdateModal} value='edit'>edit</button>
-					<button type="button" onClick={this.exportList}>export</button>
-					<button type="button" onClick={this.deleteItems}>delete</button>
-					<button type="button" onClick={this.deleteAll}>delete all</button>
-				</form>
+			<div className="buttonLayer">
+					<button onClick={this.showUpdateModal} value='Add'>Add</button>
+					<button onClick={this.showUpdateModal} value='Edit'>Edit</button>
+					<button onClick={this.exportList}>Export</button>
+					<button onClick={this.deleteItems}>Delete</button>
+					<button onClick={this.deleteAll}>Delete All</button>
 			</div>
 		);
 	}
